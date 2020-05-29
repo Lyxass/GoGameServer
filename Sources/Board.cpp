@@ -75,3 +75,51 @@ void Board::setPawn(Pawn *p) {
         throw runtime_error("Invalid Move");
     }
 }
+
+vector<Pawn> Board::getChain(Pawn *p) {
+    vector<Pawn> res;
+    if(p->getX()-1 >0){
+        if(p->getPlayer().getPseudo() == getPawn(p->getX()-1,p->getY()).getPlayer().getPseudo()){
+            res.push_back(getPawn(p->getX()-1,p->getY()));
+            concatenate(res,getChain(&getPawn(p->getX()-1,p->getY())));
+        }
+    }
+    if(p->getX()+1 >0){
+        if(p->getPlayer().getPseudo() == getPawn(p->getX()+1,p->getY()).getPlayer().getPseudo()){
+            res.push_back(getPawn(p->getX()+1,p->getY()));
+        }
+    }
+    if(p->getY()-1 >0){
+        if(p->getPlayer().getPseudo() == getPawn(p->getX(),p->getY()-1).getPlayer().getPseudo()){
+            res.push_back(getPawn(p->getX(),p->getY()-1));
+        }
+    }
+    if(p->getY()+1 >0){
+        if(p->getPlayer().getPseudo() == getPawn(p->getX(),p->getY()+1).getPlayer().getPseudo()){
+            res.push_back(getPawn(p->getX(),p->getY()+1));
+        }
+    }
+}
+
+vector<Pawn> Board::concatenate(std::vector<Pawn> p1, std::vector<Pawn> p2) {
+    vector<Pawn> res;
+    for (int i = 0; i < p1.size(); ++i) {
+        if(!existIn(res,p1.at(i))){
+            res.push_back(p1.at(i));
+        }
+    }
+    for (int i = 0; i < p2.size(); ++i) {
+        if(!existIn(res,p2.at(i))){
+            res.push_back(p2.at(i));
+        }
+    }
+}
+
+bool existIn(std::vector<Pawn> p1, Pawn p){
+    for (int i = 0; i < p1.size(); ++i) {
+        if(p1.at(i) == p){
+            return true;
+        }
+    }
+    return false;
+}

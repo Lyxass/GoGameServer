@@ -15,3 +15,7 @@ void Player::setPseudo(std::string pseudo) {
 Player::Player(std::string pseudo) {
     this->pseudo = pseudo;
 }
+
+bool operator==(Player p1,Player p2){
+    p1.getPseudo() == p2.getPseudo();
+}

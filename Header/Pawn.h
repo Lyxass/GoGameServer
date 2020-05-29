@@ -26,5 +26,7 @@ public:
 
 };
 
+bool operator==(Pawn const p1, Pawn const p2);
+
 
 #endif //GOGAMECPP_PAWN_H

@@ -39,3 +39,7 @@ void Pawn::setX(int x) {
 void Pawn::setY(int y) {
     this->y = y;
 }
+
+bool operator==(Pawn  p1, Pawn  p2){
+    return p1.getX() == p2.getX() && p1.getY() == p2.getY() && p1.getPlayer() == p2.getPlayer();
+}

@@ -18,5 +18,6 @@ public:
 
 };
 
+bool operator==(Player p1,Player p2);
 
 #endif //GOGAMECPP_PLAYER_H
