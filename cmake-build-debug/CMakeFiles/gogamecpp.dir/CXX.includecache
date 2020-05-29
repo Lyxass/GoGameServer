@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lyxas/CLionProjects/gogamecpp/Header/Pawn.h
+
+/home/lyxas/CLionProjects/gogamecpp/Sources/Pawn.cpp
+../Header/Pawn.h
+/home/lyxas/CLionProjects/gogamecpp/Header/Pawn.h
+
+/home/lyxas/CLionProjects/gogamecpp/main.cpp
+stdlib.h
+-
+stdio.h
+-
+Header/Pawn.h
+/home/lyxas/CLionProjects/gogamecpp/Header/Pawn.h
+

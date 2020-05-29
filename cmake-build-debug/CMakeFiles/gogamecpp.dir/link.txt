@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/gogamecpp.dir/main.cpp.o CMakeFiles/gogamecpp.dir/Sources/Pawn.cpp.o CMakeFiles/gogamecpp.dir/Sources/Player.cpp.o CMakeFiles/gogamecpp.dir/Sources/Board.cpp.o  -o gogamecpp 
