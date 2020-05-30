@@ -7,6 +7,7 @@
 Player::Player(std::string pseudo, std::string symbol) {
     this->pseudo = pseudo;
     this->symbol = symbol;
+    pawnCaptured = 0;
 }
 
 std::string Player::getPseudo() {
@@ -31,4 +32,12 @@ bool operator==(Player p1,Player p2){
 
 std::string Player::getString() {
     return "Pseudo : " + pseudo + " Symbol : "+ symbol;
+}
+
+void Player::setPawnCaptured(int cpt) {
+    pawnCaptured = cpt;
+}
+
+int Player::getPawnCaptured() {
+    return pawnCaptured;
 }

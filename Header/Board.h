@@ -15,11 +15,13 @@ private:
     int size;
 
     std::vector<Pawn*> concatenate(std::vector<Pawn*> p1,std::vector<Pawn*> p2);
+    void manageIfPawnIsCaptured(Pawn *p);
+    void capturePawn(std::vector<Pawn*> chain,Player *p);
 
 public:
+    std::vector<Pawn*> getLibertyOfChain(std::vector<Pawn*> chain);
     bool existIn(std::vector<Pawn*> p1, Pawn* p);
     Board();
-    Board(int size);
     int getSize() const;
     void setPawn(Pawn *p);
     Pawn* getPawn(int x, int y);

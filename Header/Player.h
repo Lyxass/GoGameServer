@@ -11,6 +11,7 @@ class Player {
 private:
     std::string pseudo;
     std::string symbol;
+    int pawnCaptured;
 public:
     Player(std::string pseudo, std::string symbol);
 
@@ -19,6 +20,8 @@ public:
     std::string getSymbol();
     void setSymbol(std::string s);
     std::string getString();
+    void setPawnCaptured(int cpt);
+    int getPawnCaptured();
 
 };
 

@@ -27,29 +27,29 @@ std::vector<Pawn *> Board::getLiberty(Pawn *p) {
         throw invalid_argument("X and Y must be in interval [0,8]");
     }
     if (p->getX() - 1 >= 0) {
-        if (p->getPlayer()->getPseudo() != getPawn(p->getX() - 1, p->getY())->getPlayer()->getPseudo()) {
+        if (getPawn(p->getX() - 1, p->getY())->getPlayer()->getSymbol() == "#") {
             res.push_back(getPawn(p->getX() - 1, p->getY()));
         }
     }
     if (p->getX() + 1 <= 8) {
-        if (p->getPlayer()->getPseudo() != getPawn(p->getX() + 1, p->getY())->getPlayer()->getPseudo()) {
+        if (getPawn(p->getX() + 1, p->getY())->getPlayer()->getSymbol() == "#") {
             res.push_back(getPawn(p->getX() + 1, p->getY()));
         }
     }
     if (p->getY() - 1 >= 0) {
-        if (p->getPlayer()->getPseudo() != getPawn(p->getX(), p->getY() - 1)->getPlayer()->getPseudo()) {
+        if (getPawn(p->getX(), p->getY() - 1)->getPlayer()->getSymbol() == "#") {
             res.push_back(getPawn(p->getX(), p->getY() - 1));
         }
     }
     if (p->getY() + 1 <= 8) {
-        if (p->getPlayer()->getPseudo() != getPawn(p->getX(), p->getY() + 1)->getPlayer()->getPseudo()) {
+        if (getPawn(p->getX(), p->getY() + 1)->getPlayer()->getSymbol() == "#") {
             res.push_back(getPawn(p->getX(), p->getY() + 1));
         }
     }
     return res;
 }
 
-Pawn *Board::getPawn(int x, int y) {
+Pawn* Board::getPawn(int x, int y) {
     if (x < 0 || x > 8 || y < 0 || y > 8) {
         throw invalid_argument("X and Y must be in interval [0,8]");
     }
@@ -63,6 +63,7 @@ bool Board::isValidMove(Pawn *p) {
     if (!getPawn(p->getX(), p->getY())->getPlayer()->getPseudo().empty()) {
         return false;
     }
+    manageIfPawnIsCaptured(p);
     return !getLiberty(p).empty();
 }
 
@@ -75,13 +76,16 @@ void Board::setPawn(Pawn *p) {
 }
 
 vector<Pawn *> Board::getChain(Pawn *p,vector<Pawn*> *res) {
+    if(p->getPlayer()->getSymbol() == "#"){
+        return *res;
+    }
     if(!existIn(*res,p)){
         res->push_back(p);
     }
     Pawn *tmp;
     if (p->getX() - 1 >= 0) {
         tmp = getPawn(p->getX() - 1, p->getY());
-        if (p->getPlayer()->getPseudo() == tmp->getPlayer()->getPseudo()) {
+        if (p->getPlayer() == tmp->getPlayer()) {
             if (!existIn(*res, tmp)) {
                 res->push_back(tmp);
                 getChain(tmp,res);
@@ -90,7 +94,7 @@ vector<Pawn *> Board::getChain(Pawn *p,vector<Pawn*> *res) {
     }
     if (p->getX() + 1 <= 8) {
         tmp = getPawn(p->getX() + 1, p->getY());
-        if (p->getPlayer()->getPseudo() == tmp->getPlayer()->getPseudo()) {
+        if (p->getPlayer() == tmp->getPlayer()) {
             if (!existIn(*res, tmp)) {
                 res->push_back(tmp);
                 getChain(tmp,res);
@@ -108,7 +112,7 @@ vector<Pawn *> Board::getChain(Pawn *p,vector<Pawn*> *res) {
     }
     if (p->getY() + 1 <= 8) {
         tmp = getPawn(p->getX(), p->getY() + 1);
-        if (p->getPlayer()->getPseudo() == tmp->getPlayer()->getPseudo()) {
+        if (p->getPlayer() == tmp->getPlayer()) {
             if (!existIn(*res, tmp)) {
                 res->push_back(tmp);
                 getChain(tmp,res);
@@ -133,11 +137,6 @@ vector<Pawn *> Board::concatenate(std::vector<Pawn *> p1, std::vector<Pawn *> p2
     return res;
 }
 
-Board::Board(int size) {
-    this->size = size;
-
-}
-
 bool Board::existIn(std::vector<Pawn *> p1, Pawn *p) {
     for (int i = 0; i < p1.size(); ++i) {
         if (*p1.at(i) == *p) {
@@ -152,11 +151,66 @@ string Board::getString()  {
     res = "";
     for (int j = 0; j < 9; ++j) {
         for (int i = 0; i < 8; ++i) {
-             res += getPawn(j,i)->getPlayer()->getSymbol() + "--";
+             res += matrix[j][i].getPlayer()->getSymbol() + "--";
         }
         res+= getPawn(j,8)->getPlayer()->getSymbol() + "\n";
     }
     return res;
 }
 
+void Board::manageIfPawnIsCaptured(Pawn *p){
+    if(p->getX()-1 >=0){
+        Pawn *tmp;
+        tmp = getPawn(p->getX()-1,p->getY());
+        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != "#"){
+            vector<Pawn*> libertyChain = getLibertyOfChain(getChain(tmp,new vector<Pawn*>()));
+            if(libertyChain.size() == 1 && p->getY() == libertyChain.at(0)->getY() && p->getX() == libertyChain.at(0)->getX()){
+                capturePawn(getChain(tmp,new vector<Pawn*>()),p->getPlayer());
+            }
+        }
+    }
+    if(p->getX()+1 <=88){
+        Pawn *tmp;
+        tmp = getPawn(p->getX()+1,p->getY());
+        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != "#"){
+            vector<Pawn*> libertyChain = getLibertyOfChain(getChain(tmp,new vector<Pawn*>()));
+            if(libertyChain.size() == 1 && p->getY() == libertyChain.at(0)->getY() && p->getX() == libertyChain.at(0)->getX()){
+                capturePawn(getChain(tmp,new vector<Pawn*>()),p->getPlayer());
+            }
+        }
+    }
+    if(p->getY()-1 >=0){
+        Pawn *tmp;
+        tmp = getPawn(p->getX(),p->getY()-1);
+        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != "#"){
+            vector<Pawn*> libertyChain = getLibertyOfChain(getChain(tmp,new vector<Pawn*>()));
+            if(libertyChain.size() == 1 && p->getY() == libertyChain.at(0)->getY() && p->getX() == libertyChain.at(0)->getX()){
+                capturePawn(getChain(tmp,new vector<Pawn*>()),p->getPlayer());
+            }
+        }
+    }if(p->getY()+1 <=8){
+        Pawn *tmp;
+        tmp = getPawn(p->getX(),p->getY()+1);
+        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != "#"){
+            vector<Pawn*> libertyChain = getLibertyOfChain(getChain(tmp,new vector<Pawn*>()));
+            if(libertyChain.size() == 1 && p->getY() == libertyChain.at(0)->getY() && p->getX() == libertyChain.at(0)->getX()){
+                capturePawn(getChain(tmp,new vector<Pawn*>()),p->getPlayer());
+            }
+        }
+    }
+}
 
+std::vector<Pawn*> Board::getLibertyOfChain(std::vector<Pawn*> chain){
+    std::vector<Pawn*> res;
+    for (int i = 0; i < chain.size(); ++i) {
+        res = concatenate(res,getLiberty(chain.at(i)));
+    }
+    return res;
+}
+
+void Board::capturePawn(std::vector<Pawn *> chain, Player *p) {
+    for (int i = 0; i < chain.size(); ++i) {
+        matrix[chain.at(i)->getX()][chain.at(i)->getY()] = Pawn(chain.at(i)->getX(),chain.at(i)->getY(),new Player("","#"));
+        p->setPawnCaptured(p->getPawnCaptured()+1);
+    }
+}
