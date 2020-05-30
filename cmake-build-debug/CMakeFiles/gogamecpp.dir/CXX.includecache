@@ -22,23 +22,17 @@ Player.h
 string
 /home/lyxas/CLionProjects/gogamecpp/Header/string
 
-/home/lyxas/CLionProjects/gogamecpp/Sources/Board.cpp
-../Header/Board.h
-/home/lyxas/CLionProjects/gogamecpp/Header/Board.h
-
-/home/lyxas/CLionProjects/gogamecpp/Sources/Pawn.cpp
-../Header/Pawn.h
-/home/lyxas/CLionProjects/gogamecpp/Header/Pawn.h
-
-/home/lyxas/CLionProjects/gogamecpp/Sources/Player.cpp
-../Header/Player.h
-/home/lyxas/CLionProjects/gogamecpp/Header/Player.h
-
 /home/lyxas/CLionProjects/gogamecpp/main.cpp
-stdlib.h
--
 stdio.h
+/home/lyxas/CLionProjects/gogamecpp/stdio.h
+stdlib.h
+/home/lyxas/CLionProjects/gogamecpp/stdlib.h
+cassert
 -
 Header/Pawn.h
 /home/lyxas/CLionProjects/gogamecpp/Header/Pawn.h
+Header/Board.h
+/home/lyxas/CLionProjects/gogamecpp/Header/Board.h
+Header/Player.h
+/home/lyxas/CLionProjects/gogamecpp/Header/Player.h
 

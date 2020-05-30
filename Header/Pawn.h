@@ -19,10 +19,11 @@ public:
     Pawn(int x, int y, Player *p);
     void setX(int x);
     void setY(int y);
-    void setP(Player p);
-    int getX();
-    int getY();
-    Player getPlayer();
+    void setP(Player *p);
+    int getX() const;
+    int getY() const;
+    Player* getPlayer();
+    std::string getString();
 
 };
 

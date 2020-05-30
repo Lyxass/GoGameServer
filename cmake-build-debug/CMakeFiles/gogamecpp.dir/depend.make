@@ -13,6 +13,7 @@ CMakeFiles/gogamecpp.dir/Sources/Pawn.cpp.o: ../Sources/Pawn.cpp
 CMakeFiles/gogamecpp.dir/Sources/Player.cpp.o: ../Header/Player.h
 CMakeFiles/gogamecpp.dir/Sources/Player.cpp.o: ../Sources/Player.cpp
 
+CMakeFiles/gogamecpp.dir/main.cpp.o: ../Header/Board.h
 CMakeFiles/gogamecpp.dir/main.cpp.o: ../Header/Pawn.h
 CMakeFiles/gogamecpp.dir/main.cpp.o: ../Header/Player.h
 CMakeFiles/gogamecpp.dir/main.cpp.o: ../main.cpp

@@ -14,21 +14,24 @@ private:
     Pawn matrix[9][9];
     int size;
 
-    std::vector<Pawn> concatenate(std::vector<Pawn> p1,std::vector<Pawn> p2);
-    bool existIn(std::vector<Pawn> p1, Pawn p);
+    std::vector<Pawn*> concatenate(std::vector<Pawn*> p1,std::vector<Pawn*> p2);
+
 public:
+    bool existIn(std::vector<Pawn*> p1, Pawn* p);
     Board();
     Board(int size);
-    int getSize();
+    int getSize() const;
     void setPawn(Pawn *p);
-    Pawn getPawn(int x,int y);
+    Pawn* getPawn(int x, int y);
 
     bool isValidMove(Pawn *p);
-    std::vector<Pawn> getLiberty(Pawn *P);
+    std::vector<Pawn*> getLiberty(Pawn *P);
 
-    std::vector<Pawn> getChain(Pawn *p);
+    std::vector<Pawn*> getChain(Pawn *p,std::vector<Pawn*> *res);
+    std::string getString();
+
 
 };
 
-
+std::ostream &operator<<(std::ostream &flux, const char *board);
 #endif //GOGAMECPP_BOARD_H

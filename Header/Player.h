@@ -10,11 +10,15 @@
 class Player {
 private:
     std::string pseudo;
+    std::string symbol;
 public:
-    Player(std::string pseudo);
+    Player(std::string pseudo, std::string symbol);
 
     std::string getPseudo();
     void setPseudo(std::string pseudo);
+    std::string getSymbol();
+    void setSymbol(std::string s);
+    std::string getString();
 
 };
 
