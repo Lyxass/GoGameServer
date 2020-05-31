@@ -93,10 +93,12 @@ int main() {
 
 
 std::string prepareMessage(std::string board, Player *j1, Player *j2) {
-    std::string msg = "J1 : " + j1->getPseudo() + " have the symbol : O\n";
-    msg += "J2 : " + j2->getPseudo() + " have the symbol : X\n";
-    msg += "# means empty.\n";
+    std::string msg = j2->getPseudo() + " Symbol : 0 Nb Pawn captured : "+ std::to_string(j1->getPawnCaptured()) +"\n";
+    msg += j2->getPseudo() + " Symbol : X Nb Pawn captured : " + std::to_string(j2->getPawnCaptured()) +"\n";
+    msg += "# : empty.\n";
+    msg += "\n";
     msg += board + "\n";
+    msg += "\n";
     msg += "To play, enter de x y coord of the case. Don't forget to follow this pattern (x,y).\n";
     msg += "x : N° of the LINE (start from 0)\n";
     msg += "y : N° of the column (start from 0)\n";
@@ -129,7 +131,7 @@ void playerTurn(Board *b, Player *pWhoPlay, Player *otherPlayer, int sock_S, soc
                (struct sockaddr *) &sa_pWhoPlay, taille_sa);
 
 
-        sendto(sock_S, "It's your turn", 2048 * sizeof(char), 0,
+        sendto(sock_S, "It's your turn ! Please enter the x,y of the case where you want to play :", 2048 * sizeof(char), 0,
                (struct sockaddr *) &sa_pWhoPlay, taille_sa);
 
 
