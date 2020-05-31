@@ -22,9 +22,31 @@ Player.h
 string
 /home/lyxas/CLionProjects/gogamecpp/Header/string
 
-/home/lyxas/CLionProjects/gogamecpp/Sources/Board.cpp
+/home/lyxas/CLionProjects/gogamecpp/main.cpp
+sys/socket.h
+-
+sys/un.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+strings.h
+-
+unistd.h
+-
+cstdlib
+-
+cstdio
+-
+stdexcept
+-
 iostream
 -
-../Header/Board.h
+Header/Player.h
+/home/lyxas/CLionProjects/gogamecpp/Header/Player.h
+Header/Pawn.h
+/home/lyxas/CLionProjects/gogamecpp/Header/Pawn.h
+Header/Board.h
 /home/lyxas/CLionProjects/gogamecpp/Header/Board.h
 

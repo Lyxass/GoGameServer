@@ -24,7 +24,7 @@ int Board::getSize() const {
 std::vector<Pawn *> Board::getLiberty(Pawn *p) {
     vector<Pawn *> res;
     if (p->getX() > 8 || p->getX() < 0 || p->getY() > 8 || p->getY() < 0) {
-        throw invalid_argument("X and Y must be in interval [0,8]");
+        throw invalid_argument("getLiberty : X and Y must be in interval [0,8]");
     }
     if (p->getX() - 1 >= 0) {
         if (getPawn(p->getX() - 1, p->getY())->getPlayer()->getSymbol() == "#") {
@@ -51,14 +51,14 @@ std::vector<Pawn *> Board::getLiberty(Pawn *p) {
 
 Pawn* Board::getPawn(int x, int y) {
     if (x < 0 || x > 8 || y < 0 || y > 8) {
-        throw invalid_argument("X and Y must be in interval [0,8]");
+        throw invalid_argument("getPawn : X and Y must be in interval [0,8]");
     }
     return &matrix[x][y];
 }
 
 bool Board::isValidMove(Pawn *p) {
     if (p->getX() < 0 || p->getX() > 8 || p->getY() < 0 || p->getY() > 8) {
-        throw invalid_argument("X and Y must be in interval [0,8]");
+        throw invalid_argument("isValidMove : X and Y must be in interval [0,8]");
     }
     if (!getPawn(p->getX(), p->getY())->getPlayer()->getPseudo().empty()) {
         return false;
@@ -68,6 +68,9 @@ bool Board::isValidMove(Pawn *p) {
 }
 
 void Board::setPawn(Pawn *p) {
+    if (p->getX() < 0 || p->getX() > 8 || p->getY() < 0 || p->getY() > 8) {
+        throw invalid_argument("setPawn : X and Y must be in interval [0,8]");
+    }
     if (isValidMove(p)) {
         matrix[p->getX()][p->getY()] = *p;
     } else {
@@ -76,6 +79,9 @@ void Board::setPawn(Pawn *p) {
 }
 
 vector<Pawn *> Board::getChain(Pawn *p,vector<Pawn*> *res) {
+    if (p->getX() < 0 || p->getX() > 8 || p->getY() < 0 || p->getY() > 8) {
+        throw invalid_argument("getChain : X and Y must be in interval [0,8]");
+    }
     if(p->getPlayer()->getSymbol() == "#"){
         return *res;
     }
@@ -138,6 +144,9 @@ vector<Pawn *> Board::concatenate(std::vector<Pawn *> p1, std::vector<Pawn *> p2
 }
 
 bool Board::existIn(std::vector<Pawn *> p1, Pawn *p) {
+    if (p->getX() < 0 || p->getX() > 8 || p->getY() < 0 || p->getY() > 8) {
+        throw invalid_argument("existIn : X and Y must be in interval [0,8]");
+    }
     for (int i = 0; i < p1.size(); ++i) {
         if (*p1.at(i) == *p) {
             return true;
@@ -169,7 +178,7 @@ void Board::manageIfPawnIsCaptured(Pawn *p){
             }
         }
     }
-    if(p->getX()+1 <=88){
+    if(p->getX()+1 <=8){
         Pawn *tmp;
         tmp = getPawn(p->getX()+1,p->getY());
         if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != "#"){
