@@ -12,8 +12,9 @@ private:
     std::string pseudo;
     std::string symbol;
     int pawnCaptured;
+    bool isGuiClient;
 public:
-    Player(std::string pseudo, std::string symbol);
+    Player(std::string pseudo, std::string symbol, bool isGuiClient);
 
     std::string getPseudo();
     void setPseudo(std::string pseudo);
@@ -22,6 +23,9 @@ public:
     std::string getString();
     void setPawnCaptured(int cpt);
     int getPawnCaptured();
+    bool getIsGuiClient();
+    void setIsGuiCLient(bool b);
+
 
 };
 

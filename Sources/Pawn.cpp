@@ -6,7 +6,7 @@
 Pawn::Pawn() {
     x = -1;
     y = -1;
-    p = new Player("","#");
+    p = new Player("","#",false);
 }
 
 

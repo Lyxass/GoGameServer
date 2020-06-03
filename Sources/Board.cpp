@@ -11,7 +11,7 @@ using namespace std;
 Board::Board() {
     for (int i = 0; i < 9; ++i) {
         for (int j = 0; j < 9; ++j) {
-            matrix[i][j] = Pawn(i, j, new Player("","#"));
+            matrix[i][j] = Pawn(i, j, new Player("","#",false));
         }
     }
     size = 9;
@@ -219,7 +219,7 @@ std::vector<Pawn*> Board::getLibertyOfChain(std::vector<Pawn*> chain){
 
 void Board::capturePawn(std::vector<Pawn *> chain, Player *p) {
     for (int i = 0; i < chain.size(); ++i) {
-        matrix[chain.at(i)->getX()][chain.at(i)->getY()] = Pawn(chain.at(i)->getX(),chain.at(i)->getY(),new Player("","#"));
+        matrix[chain.at(i)->getX()][chain.at(i)->getY()] = Pawn(chain.at(i)->getX(),chain.at(i)->getY(),new Player("","#",false));
         p->setPawnCaptured(p->getPawnCaptured()+1);
     }
 }

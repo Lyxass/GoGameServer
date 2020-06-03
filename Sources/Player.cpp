@@ -4,10 +4,11 @@
 
 #include "../Header/Player.h"
 
-Player::Player(std::string pseudo, std::string symbol) {
+Player::Player(std::string pseudo, std::string symbol, bool isGuiClient) {
     this->pseudo = pseudo;
     this->symbol = symbol;
     pawnCaptured = 0;
+    this->isGuiClient = isGuiClient;
 }
 
 std::string Player::getPseudo() {
@@ -41,3 +42,7 @@ void Player::setPawnCaptured(int cpt) {
 int Player::getPawnCaptured() {
     return pawnCaptured;
 }
+
+bool Player::getIsGuiClient() {return isGuiClient;}
+
+void Player::setIsGuiCLient(bool b) {isGuiClient = b;}
