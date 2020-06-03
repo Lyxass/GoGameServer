@@ -31,6 +31,7 @@ public:
 
     std::vector<Pawn*> getChain(Pawn *p,std::vector<Pawn*> *res);
     std::string getString();
+    void getStringForGui(char tab[2048]);
 
 
 };

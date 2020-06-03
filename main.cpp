@@ -68,7 +68,7 @@ int main() {
 
     string messageRecv(message);
 
-    Player j1 = Player(message, "O", isGui);
+    Player j1 = Player(message, 'O', isGui);
 
     sendto(sock_S, "1", 2048 * sizeof(char), 0,
            (struct sockaddr *) &sa_j1, taille_sa);
@@ -81,7 +81,7 @@ int main() {
     isGui = message[2047] == '1';
     cout << string("isGui : ") ;
     cout << isGui << endl;
-    Player j2 = Player(message, "X", isGui);
+    Player j2 = Player(message, 'X', isGui);
 
 
     sendto(sock_S, "2", 2048 * sizeof(char), 0,
@@ -105,8 +105,7 @@ int main() {
 
 
 std::string prepareMessage(std::string board, Player *j1, Player *j2) {
-    std::string msg =
-            j2->getPseudo() + " Symbol : 0 Nb Pawn captured : " + std::to_string(j1->getPawnCaptured()) + "\n";
+    std::string msg = j1->getPseudo() + " Symbol : 0 Nb Pawn captured : " + std::to_string(j1->getPawnCaptured()) + "\n";
     msg += j2->getPseudo() + " Symbol : X Nb Pawn captured : " + std::to_string(j2->getPawnCaptured()) + "\n";
     msg += "# : empty.\n";
     msg += "\n";
@@ -121,19 +120,19 @@ std::string prepareMessage(std::string board, Player *j1, Player *j2) {
 void sendBoardTo(Board *b, Player *pWhoPlay, Player *otherPlayer, int sock_S, sockaddr_in sa_client, bool isGuiClient,
                  unsigned int taille_sa) {
     string msg;
-    if (isGuiClient) {
-        msg = b->getString();
-    } else {
-        if (pWhoPlay->getSymbol() == "0") {
+    char msg2[2048];
+    if (!isGuiClient) {
+        if (pWhoPlay->getSymbol() == '0') {
             msg = prepareMessage(b->getString(), pWhoPlay, otherPlayer);
         } else {
             msg = prepareMessage(b->getString(), otherPlayer, pWhoPlay);
         }
+        stringToCharTab(msg,msg2);
+    } else {
+        b->getStringForGui(msg2);
+        printf("TEST :: %s\n",msg2);
     }
-    char msg2[2048];
-    stringToCharTab(msg,msg2);
-    //cout << "ce que j'envoie " + string(msg2) + string("FIN");
-    sendto(sock_S, msg2, 2018 * sizeof(char), 0, (struct sockaddr *) &sa_client, taille_sa);
+    sendto(sock_S, msg2, 2048 * sizeof(char), 0, (struct sockaddr *) &sa_client, taille_sa);
 }
 
 void playerTurn(Board *b, Player *pWhoPlay, Player *otherPlayer, int sock_S, sockaddr_in sa_pWhoPlay,
@@ -145,9 +144,11 @@ void playerTurn(Board *b, Player *pWhoPlay, Player *otherPlayer, int sock_S, soc
 
 
     while (1) {
+        if(!pWhoPlay->getIsGuiClient()){
         sendto(sock_S, "It's your turn ! Please enter the x,y of the case where you want to play :",
                2048 * sizeof(char), 0,
                (struct sockaddr *) &sa_pWhoPlay, taille_sa);
+        }
 
         cout << "player " + pWhoPlay->getPseudo() + " mind" << endl;
 
@@ -203,3 +204,4 @@ void stringToCharTab(string str,char res[2048]){
     }
 
 }
+

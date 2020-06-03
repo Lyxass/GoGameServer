@@ -10,16 +10,16 @@
 class Player {
 private:
     std::string pseudo;
-    std::string symbol;
+    char symbol;
     int pawnCaptured;
     bool isGuiClient;
 public:
-    Player(std::string pseudo, std::string symbol, bool isGuiClient);
+    Player(std::string pseudo, char symbol, bool isGuiClient);
 
     std::string getPseudo();
     void setPseudo(std::string pseudo);
-    std::string getSymbol();
-    void setSymbol(std::string s);
+    char getSymbol();
+    void setSymbol(char s);
     std::string getString();
     void setPawnCaptured(int cpt);
     int getPawnCaptured();

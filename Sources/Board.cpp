@@ -11,7 +11,7 @@ using namespace std;
 Board::Board() {
     for (int i = 0; i < 9; ++i) {
         for (int j = 0; j < 9; ++j) {
-            matrix[i][j] = Pawn(i, j, new Player("","#",false));
+            matrix[i][j] = Pawn(i, j, new Player("",'#',false));
         }
     }
     size = 9;
@@ -27,22 +27,22 @@ std::vector<Pawn *> Board::getLiberty(Pawn *p) {
         throw invalid_argument("getLiberty : X and Y must be in interval [0,8]");
     }
     if (p->getX() - 1 >= 0) {
-        if (getPawn(p->getX() - 1, p->getY())->getPlayer()->getSymbol() == "#") {
+        if (getPawn(p->getX() - 1, p->getY())->getPlayer()->getSymbol() == '#') {
             res.push_back(getPawn(p->getX() - 1, p->getY()));
         }
     }
     if (p->getX() + 1 <= 8) {
-        if (getPawn(p->getX() + 1, p->getY())->getPlayer()->getSymbol() == "#") {
+        if (getPawn(p->getX() + 1, p->getY())->getPlayer()->getSymbol() == '#') {
             res.push_back(getPawn(p->getX() + 1, p->getY()));
         }
     }
     if (p->getY() - 1 >= 0) {
-        if (getPawn(p->getX(), p->getY() - 1)->getPlayer()->getSymbol() == "#") {
+        if (getPawn(p->getX(), p->getY() - 1)->getPlayer()->getSymbol() == '#') {
             res.push_back(getPawn(p->getX(), p->getY() - 1));
         }
     }
     if (p->getY() + 1 <= 8) {
-        if (getPawn(p->getX(), p->getY() + 1)->getPlayer()->getSymbol() == "#") {
+        if (getPawn(p->getX(), p->getY() + 1)->getPlayer()->getSymbol() == '#') {
             res.push_back(getPawn(p->getX(), p->getY() + 1));
         }
     }
@@ -82,7 +82,7 @@ vector<Pawn *> Board::getChain(Pawn *p,vector<Pawn*> *res) {
     if (p->getX() < 0 || p->getX() > 8 || p->getY() < 0 || p->getY() > 8) {
         throw invalid_argument("getChain : X and Y must be in interval [0,8]");
     }
-    if(p->getPlayer()->getSymbol() == "#"){
+    if(p->getPlayer()->getSymbol() == '#'){
         return *res;
     }
     if(!existIn(*res,p)){
@@ -160,9 +160,11 @@ string Board::getString()  {
     res = "";
     for (int j = 0; j < 9; ++j) {
         for (int i = 0; i < 8; ++i) {
-             res += matrix[j][i].getPlayer()->getSymbol() + "--";
+             res += matrix[j][i].getPlayer()->getSymbol();
+             res += "--";
         }
-        res+= getPawn(j,8)->getPlayer()->getSymbol() + "\n";
+        res+= getPawn(j,8)->getPlayer()->getSymbol() ;
+        res += "\n";
     }
     return res;
 }
@@ -171,7 +173,7 @@ void Board::manageIfPawnIsCaptured(Pawn *p){
     if(p->getX()-1 >=0){
         Pawn *tmp;
         tmp = getPawn(p->getX()-1,p->getY());
-        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != "#"){
+        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != '#'){
             vector<Pawn*> libertyChain = getLibertyOfChain(getChain(tmp,new vector<Pawn*>()));
             if(libertyChain.size() == 1 && p->getY() == libertyChain.at(0)->getY() && p->getX() == libertyChain.at(0)->getX()){
                 capturePawn(getChain(tmp,new vector<Pawn*>()),p->getPlayer());
@@ -181,7 +183,7 @@ void Board::manageIfPawnIsCaptured(Pawn *p){
     if(p->getX()+1 <=8){
         Pawn *tmp;
         tmp = getPawn(p->getX()+1,p->getY());
-        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != "#"){
+        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != '#'){
             vector<Pawn*> libertyChain = getLibertyOfChain(getChain(tmp,new vector<Pawn*>()));
             if(libertyChain.size() == 1 && p->getY() == libertyChain.at(0)->getY() && p->getX() == libertyChain.at(0)->getX()){
                 capturePawn(getChain(tmp,new vector<Pawn*>()),p->getPlayer());
@@ -191,7 +193,7 @@ void Board::manageIfPawnIsCaptured(Pawn *p){
     if(p->getY()-1 >=0){
         Pawn *tmp;
         tmp = getPawn(p->getX(),p->getY()-1);
-        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != "#"){
+        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != '#'){
             vector<Pawn*> libertyChain = getLibertyOfChain(getChain(tmp,new vector<Pawn*>()));
             if(libertyChain.size() == 1 && p->getY() == libertyChain.at(0)->getY() && p->getX() == libertyChain.at(0)->getX()){
                 capturePawn(getChain(tmp,new vector<Pawn*>()),p->getPlayer());
@@ -200,7 +202,7 @@ void Board::manageIfPawnIsCaptured(Pawn *p){
     }if(p->getY()+1 <=8){
         Pawn *tmp;
         tmp = getPawn(p->getX(),p->getY()+1);
-        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != "#"){
+        if(tmp->getPlayer() != p->getPlayer() && tmp->getPlayer()->getSymbol() != '#'){
             vector<Pawn*> libertyChain = getLibertyOfChain(getChain(tmp,new vector<Pawn*>()));
             if(libertyChain.size() == 1 && p->getY() == libertyChain.at(0)->getY() && p->getX() == libertyChain.at(0)->getX()){
                 capturePawn(getChain(tmp,new vector<Pawn*>()),p->getPlayer());
@@ -219,7 +221,21 @@ std::vector<Pawn*> Board::getLibertyOfChain(std::vector<Pawn*> chain){
 
 void Board::capturePawn(std::vector<Pawn *> chain, Player *p) {
     for (int i = 0; i < chain.size(); ++i) {
-        matrix[chain.at(i)->getX()][chain.at(i)->getY()] = Pawn(chain.at(i)->getX(),chain.at(i)->getY(),new Player("","#",false));
+        matrix[chain.at(i)->getX()][chain.at(i)->getY()] = Pawn(chain.at(i)->getX(),chain.at(i)->getY(),new Player("",'#',false));
         p->setPawnCaptured(p->getPawnCaptured()+1);
     }
+}
+
+void Board::getStringForGui(char tab[2048]) {
+    for (int i = 0; i <2048 ; ++i) {
+
+        tab[i] = 0;
+    }
+    for (int i = 0; i < 9*9; ++i) {
+        tab[i] += matrix[i/9][i%9].getPlayer()->getSymbol();
+    }
+    printf("%s\n",tab);
+
+
+
 }
