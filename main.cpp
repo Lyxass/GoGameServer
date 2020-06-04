@@ -130,7 +130,49 @@ void sendBoardTo(Board *b, Player *pWhoPlay, Player *otherPlayer, int sock_S, so
         stringToCharTab(msg,msg2);
     } else {
         b->getStringForGui(msg2);
-        printf("TEST :: %s\n",msg2);
+        string j1;
+        string j2;
+        if (pWhoPlay->getSymbol() == '0') {
+             j1 = string(to_string(pWhoPlay->getPawnCaptured()));
+             j2 = string(to_string(otherPlayer->getPawnCaptured()));
+        } else {
+            j1 = string(to_string(otherPlayer->getPawnCaptured()));
+            j2 = string(to_string(pWhoPlay->getPawnCaptured()));
+        }
+        cout << string("J1 : ") + j1 << endl;
+        cout << string("J2 : ") + j2 << endl;
+        if(j1.size() == 3){
+            msg2[2042] = j1[0];
+            msg2[2043] = j1[1];
+            msg2[2044] = j1[2];
+        }
+        else if (j1.size() == 2){
+            msg2[2042] = '0';
+            msg2[2043] = j1[0];
+            msg2[2044] = j1[1];
+        }
+        else {
+            msg2[2042] = '0';
+            msg2[2043] = '0';
+            msg2[2044] = j1[0];
+        }
+
+        if(j2.size() == 3){
+            msg2[2045] = j2[0];
+            msg2[2046] = j2[1];
+            msg2[2047] = j2[2];
+        }
+        else if (j2.size() == 2){
+            msg2[2045] = '0';
+            msg2[2046] = j2[0];
+            msg2[2047] = j2[1];
+        }
+        else {
+            msg2[2045] = '0';
+            msg2[2046] = '0';
+            msg2[2047] = j2[0];
+        }
+
     }
     sendto(sock_S, msg2, 2048 * sizeof(char), 0, (struct sockaddr *) &sa_client, taille_sa);
 }
@@ -204,4 +246,5 @@ void stringToCharTab(string str,char res[2048]){
     }
 
 }
+
 
