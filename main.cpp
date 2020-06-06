@@ -113,8 +113,8 @@ std::string prepareMessage(std::string board, Player *j1, Player *j2) {
     msg += "\n";
     msg += board + "\n";
     msg += "\n";
-    msg += "To play, enter de x y coord of the case or you can pass your turn by writing 'pass' (if the two play pass their turn, it will be the end of the game). Don't forget to follow this pattern (x,y).\n";
-    msg += "x : N° of the LINE (start from 0)\n";
+    msg += "To play, enter the x and y coordinates of the box. You can also pass your turn by writing 'pass'. If both players pass their turn, it's the end of the game. For the coordinates follow the following pattern : x,y .\n";
+    msg += "x : N° of the line (start from 0)\n";
     msg += "y : N° of the column (start from 0)\n";
     return msg;
 }
@@ -124,7 +124,7 @@ void sendBoardTo(Board *b, Player *pWhoPlay, Player *otherPlayer, int sock_S, so
     string msg;
     char msg2[2048];
     if (!isGuiClient) {
-        if (pWhoPlay->getSymbol() == '0') {
+        if (pWhoPlay->getSymbol() == 'O') {
             msg = prepareMessage(b->getString(), pWhoPlay, otherPlayer);
         } else {
             msg = prepareMessage(b->getString(), otherPlayer, pWhoPlay);

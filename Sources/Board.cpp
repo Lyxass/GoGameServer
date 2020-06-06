@@ -64,7 +64,16 @@ bool Board::isValidMove(Pawn *p) {
         return false;
     }
     manageIfPawnIsCaptured(p);
-    return !getLiberty(p).empty();
+    matrix[p->getX()][p->getY()] = *p;
+    if(getLibertyOfChain(getChain(p,new vector<Pawn*>())).size() == 0){
+        matrix[p->getX()][p->getY()] = Pawn(p->getX(),p->getY(),new Player("",'#',false));
+        return false;
+    }
+    else {
+        matrix[p->getX()][p->getY()] = Pawn(p->getX(), p->getY(), new Player("", '#', false));
+        return true;
+    }
+    //return !getLiberty(p).empty();
 }
 
 void Board::setPawn(Pawn *p) {
@@ -157,9 +166,12 @@ bool Board::existIn(std::vector<Pawn *> p1, Pawn *p) {
 
 string Board::getString()  {
     string res;
-    res = "";
+    res = "   0  1  2  3  4  5  6  7  8\n";
     for (int j = 0; j < 9; ++j) {
         for (int i = 0; i < 8; ++i) {
+             if(i == 0) {
+                res += to_string(j) + "  ";
+             }
              res += matrix[j][i].getPlayer()->getSymbol();
              res += "--";
         }
