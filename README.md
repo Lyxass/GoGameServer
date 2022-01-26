@@ -1,5 +1,5 @@
 # Go Game Server
-It's the server which permits the clients communication. To get the client, [click here](www.google.fr)
+It's the server which permits the clients communication. To get the client, [click here](https://github.com/Lyxass/GoGameClient)
 
 ## How to use ?
 Run commands 
