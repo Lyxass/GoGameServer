@@ -3,6 +3,8 @@ CMakeCache.txt
 CMakeFiles/**
 cmake_install.cmake
 .idea/**
+.cmake/**
 Makefile
-
+build.ninja
+Testing/**
 gogamecpp
