@@ -11,11 +11,11 @@ then
 ```
 make .
 ```
-in the project folder. It will generate a file name "gogamecpp"
+in the project folder. It will generate a file name "gogameserver"
 
 You can launch the server with the command 
 ```
-./gogamecpp
+./gogameserver
 ```
 
 Now the two clients can connect. The first one will play the white pawns and the second one the black pawns

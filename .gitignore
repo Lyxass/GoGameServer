@@ -8,3 +8,11 @@ Makefile
 build.ninja
 Testing/**
 gogamecpp
+
+.ninja_deps
+
+.ninja_log
+
+gogameserver
+
+rules.ninja
